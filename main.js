@@ -1,5 +1,6 @@
 // Require the necessary discord.js classes
-const { Client, Intents } = require('discord.js');
+const fs = require('fs');
+const { Client, Collection, Intents } = require('discord.js');
 const { token } = require('./config.json');
 
 // Create a new client instance
@@ -10,19 +11,30 @@ client.once('ready', () => {
 });
 
 // command handling
+client.commands = new Collection();
+const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+
+for (const file of commandFiles) {
+	const command = require(`./commands/${file}`);
+	// Set a new item in the Collection
+	// With the key as the command name and the value as the exported module
+	client.commands.set(command.data.name, command);
+}
+
 client.on('interactionCreate', async interaction => {
   // Check if interaction is command
 	if (!interaction.isCommand()) return;
 
-  // Check which command it is
-	const { commandName } = interaction;
+  // Fetch command
+  const command = client.commands.get(interaction.commandName);
+	if (!command) return;
 
-	if (commandName === 'ping') {
-		await interaction.reply('Pong!');
-	} else if (commandName === 'server') {
-		await interaction.reply(`Server name: ${interaction.guild.name}\nTotal members: ${interaction.guild.memberCount}\nServer birthday: ${interaction.guild.createdAt}\nVerification level: ${interaction.guild.verificationLevel}`);
-	} else if (commandName === 'user') {
-		await interaction.reply(`Your tag: ${interaction.user.tag}\nYour id: ${interaction.user.id}`);
+  // Execute command
+	try {
+		await command.execute(interaction);
+	} catch (error) {
+		console.error(error);
+		await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
 	}
 });
 
