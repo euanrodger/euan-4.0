@@ -17,7 +17,7 @@ const rest = new REST({ version: '9' }).setToken(token);
 (async () => {
 	try {
 		await rest.put(
-			// For deploying to all servers, rather than development:
+			// Swap following commented line with equivalent uncommented line to swap between server deploy and global deploy
 			// Routes.applicationCommands(clientId),
 			Routes.applicationGuildCommands(clientId, guildId),
 			{ body: commands },
