@@ -3,8 +3,12 @@ const fs = require('fs');
 const { Client, Collection, Intents } = require('discord.js');
 const { token } = require('./config.json');
 
+// Require markov
+const Markov = require('js-markov');
+
 // Create a new client instance
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
+
 
 // command handling
 client.commands = new Collection();
