@@ -4,7 +4,7 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('fetch')
 		.setDescription('Takes the latest messages in this channel and adds them to my log')
-    .addIntegerOption(option => option.setName('amount').setDescription('Number of messages to fetch')),
+    .addIntegerOption(option => option.setName('amount').setDescription('Number of messages to fetch').setRequired(true)),
 	async execute(interaction) {
     const amount = interaction.options.getInteger('amount');
 		if (amount <= 1 || amount > 100) {
@@ -18,12 +18,17 @@ module.exports = {
     //  Get message content from message data
     var textArray = []
     for (let i = 0; i < messageArray.length; i++) {
-      if (!messageArray[i][1].author.bot && messageArray[i][1].content != '') {
+      if (!messageArray[i][1].author.bot && messageArray[i][1].content.length != 0) {
         textArray.push(messageArray[i][1].content);
       }
     }
 
-    interaction.client.markov.addStates(textArray);
-    await interaction.reply({ content: 'Fetched!', ephemeral: true });
+		if (textArray.length != 0) {
+			interaction.client.markov.addStates(textArray);
+			interaction.client.hasStates = true;
+			await interaction.reply({ content: 'Fetched!', ephemeral: true })
+		} else {
+			await interaction.reply({ content: 'Hmmm... Looks like there weren\'t any valid messages.', ephemeral: true });
+		}
   },
 };
