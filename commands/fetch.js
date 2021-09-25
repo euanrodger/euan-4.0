@@ -18,7 +18,9 @@ module.exports = {
     //  Get message content from message data
     var textArray = []
     for (let i = 0; i < messageArray.length; i++) {
-      if (!messageArray[i][1].author.bot && messageArray[i][1].content.length != 0) {
+			// Regardless of the message length filtering, always make sure it is not 0
+			// && messageArray[i][1].content.length != 0
+      if (!messageArray[i][1].author.bot && messageArray[i][1].content.length >= 15) {
         textArray.push(messageArray[i][1].content);
       }
     }
