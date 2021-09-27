@@ -1,6 +1,7 @@
 module.exports = {
 	name: 'interactionCreate',
 	execute(interaction) {
-		console.log(`${interaction.user.tag} in #${interaction.channel.name} triggered an interaction.`);
+		const timestamp = `[${interaction.createdAt.getHours()}:${interaction.createdAt.getMinutes()}:${interaction.createdAt.getSeconds()}]`
+		console.log(`[INFO]`.blue + ` ${timestamp} In ${interaction.guild.name}#${interaction.channel.name}, ${interaction.user.tag} triggered an interaction.`);
 	},
 };
