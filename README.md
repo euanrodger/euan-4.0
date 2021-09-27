@@ -4,7 +4,7 @@ Euan 4.0 is a personal discord bot that I'm making just for fun.
 ## Cloning
 If you clone this repository for your own bot, you'll want to make sure the ignored files from `.gitignore` are included in your version of the bot. 
 
-Namely this will just be `config.json` for stuff like server/client IDs, your token, prefixes, and whatnot. This is alongside all the packages that would be found in `node_modules/` that are installed via `npm install`. So far the only packages I'm using are the ones used for discord.js and `js-markov`.
+Namely this will just be `config.json` for stuff like server/client IDs, your token, prefixes, and whatnot. This is alongside all the packages that would be found in `node_modules/` that are installed via `npm install`. So far the only packages I'm using are the ones used for discord.js, `js-markov`, and `colors`.
 
 If none of this means anything to you, it's probably because you've never made a discord bot using discord.js before. Check out [this guide](https://discordjs.guide/#before-you-begin) so you at least know the basics.
 
