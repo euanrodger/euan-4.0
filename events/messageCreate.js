@@ -14,7 +14,7 @@ module.exports = {
       console.log('[MARKOV]'.green + ' Message added to markov states!');
     }
     // Say something randomly
-    if (!message.author.bot && message.client.isTrained == true) {
+    if (!message.author.bot && message.client.isTrained == true && message.channel.permissionsFor(message.guild.me).has('SEND_MESSAGES') ) {
       const messageChance = 0.05;
       const hit = Math.random();
       if (hit <= messageChance) {
